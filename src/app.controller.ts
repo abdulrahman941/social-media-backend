@@ -24,6 +24,11 @@ const limiter:RateLimitRequestHandler=rateLimit({
 
 
 export const bootstrap=async(app:Express):Promise<void>=>{
+
+app.get("/",(req:Request,res:Response)=>{
+return res.status(200).json({message:`welcome to ${env.application_name} app`})
+})
+
 await connectDB()
 
 app.use(express.json())
@@ -34,9 +39,7 @@ app.use("/api/v1/user",usercontroller)
 
 
 
-app.get("/",(req:Request,res:Response)=>{
-return res.status(200).json({message:`welcome to ${env.application_name} app`})
-})
+
 
 app.use("/*dummy",(req:Request,res:Response)=>{
     throw new NotFoundException("Route not fonnd")
