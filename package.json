@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "concurrently \"tsc --watch\" \"node --watch ./dist/index.js\"",
-    "build": "ls -la node_modules/@types || true && cat package.json && tsc",
+    "build": "pwd && ls -la && ls -la node_modules/@types 2>/dev/null || ls -la ../node_modules/@types 2>/dev/null || true",
     "start": "node dist/index.js"
   },
   "keywords": [],
