@@ -12,7 +12,7 @@ bootstrap(app).catch((error:unknown)=>{
 
 
 app.listen(env.port,()=>{
-    console.log(`server is running on port http://127.0.0.1:${env.port}`);
+    console.log(`server is running on port ${env.port}`);
     
 })
 
