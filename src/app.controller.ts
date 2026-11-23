@@ -23,10 +23,11 @@ const limiter:RateLimitRequestHandler=rateLimit({
 })
 
 
-export const bootstrap=async():Promise<void>=>{
+export const bootstrap=async(app:Express):Promise<void>=>{
 
-const app:Express=express()
 
+app.use(helmet(), limiter, cors(corsOptions));
+app.use(express.json());
 app.use(helmet(),limiter,cors(corsOptions))
 app.use(express.json())
 await connectDB()
@@ -45,8 +46,5 @@ app.use("/*dummy",(req:Request,res:Response)=>{
 })
 app.use(globalErrorHandlar)
 
-app.listen(env.port,()=>{
-    console.log(`server is running on port http://127.0.0.1:${env.port}`);
-    
-})
+
 }
