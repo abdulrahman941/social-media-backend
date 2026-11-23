@@ -7,7 +7,7 @@ const node_process_1 = require("node:process");
 const app_controller_1 = require("./app.controller");
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
-(0, app_controller_1.bootstrap)(app, express_1.default).catch((error) => {
+(0, app_controller_1.bootstrap)(app).catch((error) => {
     console.log("failed to srart application", error);
     process.exit(1);
 });
