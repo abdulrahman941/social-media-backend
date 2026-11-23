@@ -4,7 +4,7 @@ import express, { Express} from 'express';
 
 const app:Express=express()
 
-bootstrap(app).catch((error:unknown)=>{
+bootstrap(app,express).catch((error:unknown)=>{
     console.log("failed to srart application",error);
     process.exit(1)
 })

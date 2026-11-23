@@ -24,8 +24,9 @@ const limiter = (0, express_rate_limit_1.default)({
     standardHeaders: "draft-8",
     legacyHeaders: false,
 });
-const bootstrap = async () => {
-    const app = (0, express_1.default)();
+const bootstrap = async (app) => {
+    app.use((0, helmet_1.default)(), limiter, (0, cors_1.default)(cors_2.corsOptions));
+    app.use(express_1.default.json());
     app.use((0, helmet_1.default)(), limiter, (0, cors_1.default)(cors_2.corsOptions));
     app.use(express_1.default.json());
     await (0, connection_1.default)();
@@ -39,8 +40,5 @@ const bootstrap = async () => {
         throw new error_response_1.NotFoundException("Route not fonnd");
     });
     app.use(error_response_1.globalErrorHandlar);
-    app.listen(config_services_1.env.port, () => {
-        console.log(`server is running on port http://127.0.0.1:${config_services_1.env.port}`);
-    });
 };
 exports.bootstrap = bootstrap;
