@@ -16,7 +16,7 @@ const connection_1 = __importDefault(require("./Database/connection"));
 //rate limit custom
 const limiter = (0, express_rate_limit_1.default)({
     windowMs: 15 * 60 * 1000,
-    limit: 50,
+    limit: 100,
     message: {
         status: 429,
         message: "too many requeusts,please try again later",
