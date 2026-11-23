@@ -14,3 +14,4 @@ const app = (0, express_1.default)();
 app.listen(node_process_1.env.port, () => {
     console.log(`server is running on port http://127.0.0.1:${node_process_1.env.port}`);
 });
+exports.default = app;
