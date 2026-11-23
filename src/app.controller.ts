@@ -25,10 +25,8 @@ const limiter:RateLimitRequestHandler=rateLimit({
 
 export const bootstrap=async(app:Express):Promise<void>=>{
 
-
-app.use(helmet(), limiter, cors(corsOptions));
-app.use(helmet(),limiter,cors(corsOptions))
 app.use(express.json())
+app.use(helmet(),limiter,cors(corsOptions))
 await connectDB()
 app.use("/api/v1/auth",authcontroller)
 app.use("/api/v1/post",postcontroller)
