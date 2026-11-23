@@ -27,7 +27,6 @@ export const bootstrap=async(app:Express):Promise<void>=>{
 
 
 app.use(helmet(), limiter, cors(corsOptions));
-app.use(express.json());
 app.use(helmet(),limiter,cors(corsOptions))
 app.use(express.json())
 await connectDB()

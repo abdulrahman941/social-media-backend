@@ -1,6 +1,6 @@
-import { env } from "node:process";
 import { bootstrap } from "./app.controller";
 import express, { Express} from 'express';
+import { env } from "./config/config.services";
 
 const app:Express=express()
 
