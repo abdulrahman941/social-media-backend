@@ -4,12 +4,13 @@ import { env } from "../config/config.services";
 
 const connectDB=async():Promise<void>=>{
     try {
-    const uri=env.mongo_uri
+    const uri=process.env.mongo_uri
     if(!uri){
+        console.error("Database UR is missing (mongo_uri)");
         throw new Error("mongo_uri is not defined in environment variables")
     }
-    console.log("DB URI exists:", Boolean(process.env.MONGO_URI));
-    const connection=await mongoose.connect(env.mongo_uri,{
+    console.log("DB URI exists:", Boolean(uri));
+    const connection=await mongoose.connect(uri,{
         serverSelectionTimeoutMS:5000,
     })
     console.log(`mongodb connected:${connection.connection.host}`);
