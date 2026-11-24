@@ -3,7 +3,11 @@ import { env } from "../config/config.services";
 
 
 const connectDB=async():Promise<void>=>{
-try {
+ // تجنب إعادة الاتصال إذا كان متصلاً بالفعل
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+    try {
     const connection=await mongoose.connect(env.mongo_uri,{
         serverSelectionTimeoutMS:5000,
     })
