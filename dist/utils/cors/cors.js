@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.corsOptions = void 0;
-const config_services_1 = require("../../config/config.services");
-const whitelist = config_services_1.env.whitelist.split(",");
+const whitelist = (process.env.whitelist || "").split(",");
 exports.corsOptions = {
     origin: (origin, callback) => {
         if (!origin) {

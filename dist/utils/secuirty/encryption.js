@@ -4,11 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.decrypt = exports.encrypt = void 0;
-const config_services_1 = require("../../config/config.services");
 const node_crypto_1 = __importDefault(require("node:crypto"));
+const encryption_secret_key = process.env.encryption_secret_key;
 const IV_LENGTH = 16;
 //key must be exactly 3 bytes for aes-256-cbc (validated by the config services)
-const ENCRYPTION_KEY = Buffer.from(config_services_1.env.encryption_secret_key, "utf-8");
+const ENCRYPTION_KEY = Buffer.from(encryption_secret_key, "utf-8");
 const encrypt = (text) => {
     const iv = node_crypto_1.default.randomBytes(IV_LENGTH);
     const cipher = node_crypto_1.default.createCipheriv("aes-256-cbc", ENCRYPTION_KEY, iv);

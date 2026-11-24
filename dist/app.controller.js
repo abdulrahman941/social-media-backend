@@ -7,12 +7,12 @@ exports.bootstrap = void 0;
 const express_1 = __importDefault(require("express"));
 const helmet_1 = __importDefault(require("helmet"));
 const cors_1 = __importDefault(require("cors"));
-const config_services_1 = require("./config/config.services");
 const cors_2 = require("./utils/cors/cors");
 const express_rate_limit_1 = __importDefault(require("express-rate-limit"));
 const error_response_1 = require("./utils/Response/error.response");
 const module_1 = require("./module");
 const connection_1 = __importDefault(require("./Database/connection"));
+const application_name = process.env.application_name;
 //rate limit custom
 const limiter = (0, express_rate_limit_1.default)({
     windowMs: 15 * 60 * 1000,
@@ -26,7 +26,7 @@ const limiter = (0, express_rate_limit_1.default)({
 });
 const bootstrap = async (app) => {
     app.get("/", (req, res) => {
-        return res.status(200).json({ message: `welcome to ${config_services_1.env.application_name} app` });
+        return res.status(200).json({ message: `welcome to ${application_name} app` });
     });
     await (0, connection_1.default)();
     app.use(express_1.default.json());

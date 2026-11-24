@@ -1,9 +1,11 @@
-import { env } from "../../config/config.services"
 import crypto from "node:crypto"
+
+
+const encryption_secret_key=process.env.encryption_secret_key as string
 
 const IV_LENGTH=16
 //key must be exactly 3 bytes for aes-256-cbc (validated by the config services)
-const ENCRYPTION_KEY:Buffer=Buffer.from(env.encryption_secret_key,"utf-8")
+const ENCRYPTION_KEY:Buffer=Buffer.from(encryption_secret_key,"utf-8")
 
 export const encrypt = (text:string):string=>{
     const iv:Buffer=crypto.randomBytes(IV_LENGTH)

@@ -1,8 +1,7 @@
 import {CorsOptions} from "cors"
-import {env} from  "../../config/config.services"
 
 
-const whitelist:String[]=env.whitelist.split(",")
+const whitelist:string[]=(process.env.whitelist||"").split(",")
 
 export const corsOptions:CorsOptions ={
 origin:(origin,callback)=>{

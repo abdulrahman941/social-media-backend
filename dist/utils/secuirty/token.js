@@ -4,12 +4,17 @@ exports.decodeToken = exports.createLoginCredentials = exports.verifyToken = exp
 const jsonwebtoken_1 = require("jsonwebtoken");
 const user_model_1 = require("../../Database/models/user.model");
 const user_enum_1 = require("../enums/user.enum");
-const config_services_1 = require("../../config/config.services");
 const error_response_1 = require("../Response/error.response");
 const generateToken = ({ payload, secret, options }) => {
     return (0, jsonwebtoken_1.sign)(payload, secret, options);
 };
 exports.generateToken = generateToken;
+const access_admin_signature = process.env.access_admin_signature;
+const access_user_signature = process.env.access_user_signature;
+const refresh_admin_signature = process.env.refresh_admin_signature;
+const refresh_user_signature = process.env.refresh_user_signature;
+const access_token_expires_in = Number(process.env.access_token_expires_in);
+const refresh_token_expires_in = Number(process.env.refresh_token_expires_in);
 // verifyToken (الأسطر 32 - 40)[cite: 3]
 const verifyToken = ({ token, secret, }) => {
     return (0, jsonwebtoken_1.verify)(token, secret);
@@ -19,16 +24,16 @@ exports.verifyToken = verifyToken;
 const getSignature = (type, role) => {
     const isAdmin = role === user_enum_1.RoleEnum.ADMIN;
     if (type === user_enum_1.TokenTypeEnum.ACCESS) {
-        return isAdmin ? config_services_1.env.access_admin_signature : config_services_1.env.access_user_signature;
+        return isAdmin ? access_admin_signature : access_user_signature;
     }
-    return isAdmin ? config_services_1.env.refresh_admin_signature : config_services_1.env.refresh_user_signature;
+    return isAdmin ? refresh_admin_signature : refresh_user_signature;
 };
 const createLoginCredentials = (user) => {
     const isAdmin = user.role === user_enum_1.RoleEnum.ADMIN;
-    const accesssecret = isAdmin ? config_services_1.env.access_admin_signature : config_services_1.env.access_user_signature;
-    const refreshsecret = isAdmin ? config_services_1.env.refresh_admin_signature : config_services_1.env.refresh_user_signature;
-    const accesstoken = (0, exports.generateToken)({ payload: { _id: user._id }, secret: accesssecret, options: { expiresIn: config_services_1.env.access_token_expires_in } });
-    const refreshtoken = (0, exports.generateToken)({ payload: { _id: user._id }, secret: refreshsecret, options: { expiresIn: config_services_1.env.refresh_token_expires_in } });
+    const accesssecret = isAdmin ? access_admin_signature : access_user_signature;
+    const refreshsecret = isAdmin ? refresh_admin_signature : refresh_user_signature;
+    const accesstoken = (0, exports.generateToken)({ payload: { _id: user._id }, secret: accesssecret, options: { expiresIn: access_token_expires_in } });
+    const refreshtoken = (0, exports.generateToken)({ payload: { _id: user._id }, secret: refreshsecret, options: { expiresIn: refresh_token_expires_in } });
     return { accesstoken, refreshtoken };
 };
 exports.createLoginCredentials = createLoginCredentials;

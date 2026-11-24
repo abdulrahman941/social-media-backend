@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express"
-import { env } from "../../config/config.services"
 
+
+
+const mood=process.env.mood
 
 export interface IError extends Error{
     statusCode?:number
@@ -58,7 +60,7 @@ export class tooManyRequestException extends ApplicationException{
 
 export const globalErrorHandlar=(err:IError,req:Request,res:Response,next:NextFunction):void=>{
 const statusCode=err.statusCode ||500
-const isDev=env.mood==="development" ||"production"
+const isDev=mood==="development" ||"production"
 
 if(statusCode>=500){
     console.error(err);

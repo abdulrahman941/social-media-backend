@@ -12,6 +12,6 @@ const app = (0, express_1.default)();
     process.exit(1);
 });
 app.listen(config_services_1.env.port, () => {
-    console.log(`server is running on port ${config_services_1.env.port}`);
+    console.log(`server is running on port ${process.env.port}`);
 });
 exports.default = app;

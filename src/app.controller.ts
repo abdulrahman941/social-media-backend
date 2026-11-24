@@ -1,14 +1,13 @@
 import express, { Express,Request,Response} from 'express';
 import helmet from 'helmet';
 import cors from "cors"
-import { env } from './config/config.services';
 import { corsOptions } from './utils/cors/cors';
 import rateLimit, { RateLimitRequestHandler } from 'express-rate-limit';
 import { globalErrorHandlar, NotFoundException } from './utils/Response/error.response';
 import { authcontroller, postcontroller, usercontroller } from './module';
 import connectDB from './Database/connection';
 
-
+const application_name=process.env.application_name as string
 //rate limit custom
 const limiter:RateLimitRequestHandler=rateLimit({
     windowMs:15*60*1000,
@@ -26,7 +25,7 @@ const limiter:RateLimitRequestHandler=rateLimit({
 export const bootstrap=async(app:Express):Promise<void>=>{
 
 app.get("/",(req:Request,res:Response)=>{
-return res.status(200).json({message:`welcome to ${env.application_name} app`})
+return res.status(200).json({message:`welcome to ${application_name} app`})
 })
 
 await connectDB()

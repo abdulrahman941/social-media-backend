@@ -1,7 +1,6 @@
 import { Secret, sign, SignOptions, verify } from "jsonwebtoken"
 import { HUserDocument, UserModel } from "../../Database/models/user.model"
 import { RoleEnum, TokenTypeEnum } from "../enums/user.enum"
-import { env } from "../../config/config.services"
 import { UnAuthorizedException } from "../Response/error.response"
 import { JwtPayload } from "jsonwebtoken";
 
@@ -9,8 +8,12 @@ import { JwtPayload } from "jsonwebtoken";
 export const generateToken=({payload,secret,options}:{payload:object,secret:Secret,options:SignOptions})=>{
 return sign(payload,secret,options)
 }
-
-
+const access_admin_signature=process.env.access_admin_signature as string
+const access_user_signature=process.env.access_user_signature as string
+const refresh_admin_signature=process.env.refresh_admin_signature as string
+const refresh_user_signature=process.env.refresh_user_signature as string
+const access_token_expires_in=Number(process.env.access_token_expires_in) as number
+const refresh_token_expires_in=Number(process.env.refresh_token_expires_in) as number
 export interface ITokenPayload extends JwtPayload {
   _id: string;
   role: RoleEnum;
@@ -30,17 +33,17 @@ export const verifyToken = ({
 const getSignature = (type: TokenTypeEnum, role: RoleEnum): string => {
   const isAdmin = role === RoleEnum.ADMIN;
   if (type === TokenTypeEnum.ACCESS) {
-    return isAdmin ? env.access_admin_signature : env.access_user_signature;
+    return isAdmin ? access_admin_signature : access_user_signature;
   }
-  return isAdmin ? env.refresh_admin_signature : env.refresh_user_signature;
+  return isAdmin ? refresh_admin_signature :refresh_user_signature;
 };
 export const createLoginCredentials=(user:HUserDocument):{accesstoken:string,refreshtoken:string}=>{
 const isAdmin=user.role===RoleEnum.ADMIN
-const accesssecret=isAdmin? env.access_admin_signature:env.access_user_signature
-const refreshsecret=isAdmin? env.refresh_admin_signature:env.refresh_user_signature
+const accesssecret=isAdmin? access_admin_signature:access_user_signature
+const refreshsecret=isAdmin? refresh_admin_signature:refresh_user_signature
 
-const accesstoken=generateToken({payload:{_id:user._id},secret:accesssecret,options:{expiresIn:env.access_token_expires_in}})
-const refreshtoken=generateToken({payload:{_id:user._id},secret:refreshsecret,options:{expiresIn:env.refresh_token_expires_in}})
+const accesstoken=generateToken({payload:{_id:user._id},secret:accesssecret,options:{expiresIn:access_token_expires_in}})
+const refreshtoken=generateToken({payload:{_id:user._id},secret:refreshsecret,options:{expiresIn:refresh_token_expires_in}})
 
 
 
