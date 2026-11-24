@@ -32,6 +32,7 @@ return res.status(200).json({message:`welcome to ${env.application_name} app`})
 await connectDB()
 
 app.use(express.json())
+app.set("trust proxy", 1);
 app.use(helmet(),limiter,cors(corsOptions))
 app.use("/api/v1/auth",authcontroller)
 app.use("/api/v1/post",postcontroller)

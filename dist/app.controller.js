@@ -25,15 +25,16 @@ const limiter = (0, express_rate_limit_1.default)({
     legacyHeaders: false,
 });
 const bootstrap = async (app) => {
-    app.use(express_1.default.json());
-    app.use((0, helmet_1.default)(), limiter, (0, cors_1.default)(cors_2.corsOptions));
-    await (0, connection_1.default)();
-    app.use("/api/v1/auth", module_1.authcontroller);
-    app.use("/api/v1/post", module_1.postcontroller);
-    app.use("/api/v1/user", module_1.usercontroller);
     app.get("/", (req, res) => {
         return res.status(200).json({ message: `welcome to ${config_services_1.env.application_name} app` });
     });
+    await (0, connection_1.default)();
+    app.use(express_1.default.json());
+    app.set("trust proxy", 1);
+    app.use((0, helmet_1.default)(), limiter, (0, cors_1.default)(cors_2.corsOptions));
+    app.use("/api/v1/auth", module_1.authcontroller);
+    app.use("/api/v1/post", module_1.postcontroller);
+    app.use("/api/v1/user", module_1.usercontroller);
     app.use("/*dummy", (req, res) => {
         throw new error_response_1.NotFoundException("Route not fonnd");
     });
