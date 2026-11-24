@@ -3,7 +3,11 @@ import mongoose from "mongoose";
 
 const connectDB=async():Promise<void>=>{
     try {
-    const connection=await mongoose.connect("mongodb+srv://abdulrahman1999hemida_db_user:9February99@cluster0.ihxc9k2.mongodb.net/",{
+    const uri=process.env.mongo_uri
+    if(!uri){
+        throw new Error("mongo_uri is not defined in environment variables")
+    }
+    const connection=await mongoose.connect(uri,{
         serverSelectionTimeoutMS:5000,
     })
     console.log(`mongodb connected:${connection.connection.host}`);
