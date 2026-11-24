@@ -5,16 +5,17 @@ const jsonwebtoken_1 = require("jsonwebtoken");
 const user_model_1 = require("../../Database/models/user.model");
 const user_enum_1 = require("../enums/user.enum");
 const error_response_1 = require("../Response/error.response");
+const config_services_1 = require("../../config/config.services");
 const generateToken = ({ payload, secret, options }) => {
     return (0, jsonwebtoken_1.sign)(payload, secret, options);
 };
 exports.generateToken = generateToken;
-const access_admin_signature = process.env.access_admin_signature;
-const access_user_signature = process.env.access_user_signature;
-const refresh_admin_signature = process.env.refresh_admin_signature;
-const refresh_user_signature = process.env.refresh_user_signature;
-const access_token_expires_in = Number(process.env.access_token_expires_in);
-const refresh_token_expires_in = Number(process.env.refresh_token_expires_in);
+const access_admin_signature = config_services_1.env.access_admin_signature;
+const access_user_signature = config_services_1.env.access_user_signature;
+const refresh_admin_signature = config_services_1.env.refresh_admin_signature;
+const refresh_user_signature = config_services_1.env.refresh_user_signature;
+const access_token_expires_in = Number(config_services_1.env.access_token_expires_in);
+const refresh_token_expires_in = Number(config_services_1.env.refresh_token_expires_in);
 // verifyToken (الأسطر 32 - 40)[cite: 3]
 const verifyToken = ({ token, secret, }) => {
     return (0, jsonwebtoken_1.verify)(token, secret);

@@ -1,9 +1,10 @@
 import { createTransport } from "nodemailer";
 import { BadRequestException } from "../Response/error.response";
 import Mail from "nodemailer/lib/mailer";
+import { env } from "../../config/config.services";
 
-const email_username=process.env.email_username as string
-const email_password=process.env.email_password as string
+const email_username=env.email_username 
+const email_password=env.email_password 
 
 export const sendEmail=async(data:Mail.Options):Promise<void>=>{
     if(!data.html &&!data.attachments?.length &&!data.text){

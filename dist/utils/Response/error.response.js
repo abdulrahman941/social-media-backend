@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.globalErrorHandlar = exports.tooManyRequestException = exports.ConflictException = exports.ForbiddenException = exports.UnAuthorizedException = exports.BadRequestException = exports.NotFoundException = exports.ApplicationException = void 0;
-const mood = process.env.mood;
+const config_services_1 = require("../../config/config.services");
+const mood = config_services_1.env.mood;
 class ApplicationException extends Error {
     statusCode;
     constructor(message, statusCode = 400, options) {

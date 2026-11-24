@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.compareHash = exports.generateHash = void 0;
 const bcrypt_1 = require("bcrypt");
-const salt = Number(process.env.salt);
+const config_services_1 = require("../../config/config.services");
+const salt = Number(config_services_1.env.salt);
 const generateHash = async (plaintext, saltRounds = Number(salt)) => {
     return await (0, bcrypt_1.hash)(plaintext, saltRounds);
 };

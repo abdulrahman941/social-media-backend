@@ -1,6 +1,7 @@
 import { compare, hash } from "bcrypt";
+import { env } from "../../config/config.services";
 
-const salt=Number(process.env.salt) as number
+const salt=Number(env.salt)
 
 
 

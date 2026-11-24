@@ -4,9 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
+const config_services_1 = require("../config/config.services");
 const connectDB = async () => {
     try {
-        const mongo_uri = process.env.mongo_uri;
+        const mongo_uri = config_services_1.env.mongo_uri;
         if (!mongo_uri) {
             console.error("Database UR is missing (mongo_uri)");
             throw new Error("mongo_uri is not defined in environment variables");

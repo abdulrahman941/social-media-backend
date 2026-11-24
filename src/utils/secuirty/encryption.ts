@@ -1,7 +1,8 @@
 import crypto from "node:crypto"
+import { env } from "../../config/config.services"
 
 
-const encryption_secret_key=process.env.encryption_secret_key as string
+const encryption_secret_key=env.encryption_secret_key
 
 const IV_LENGTH=16
 //key must be exactly 3 bytes for aes-256-cbc (validated by the config services)

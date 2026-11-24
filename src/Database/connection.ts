@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
+import { env } from "../config/config.services";
 
 
 const connectDB=async():Promise<void>=>{
     try {
-    const mongo_uri=process.env.mongo_uri as string
+    const mongo_uri=env.mongo_uri as string
     if(!mongo_uri){
         console.error("Database UR is missing (mongo_uri)");
         throw new Error("mongo_uri is not defined in environment variables")

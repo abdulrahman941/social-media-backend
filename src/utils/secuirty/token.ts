@@ -3,17 +3,18 @@ import { HUserDocument, UserModel } from "../../Database/models/user.model"
 import { RoleEnum, TokenTypeEnum } from "../enums/user.enum"
 import { UnAuthorizedException } from "../Response/error.response"
 import { JwtPayload } from "jsonwebtoken";
+import { env } from "../../config/config.services";
 
 
 export const generateToken=({payload,secret,options}:{payload:object,secret:Secret,options:SignOptions})=>{
 return sign(payload,secret,options)
 }
-const access_admin_signature=process.env.access_admin_signature as string
-const access_user_signature=process.env.access_user_signature as string
-const refresh_admin_signature=process.env.refresh_admin_signature as string
-const refresh_user_signature=process.env.refresh_user_signature as string
-const access_token_expires_in=Number(process.env.access_token_expires_in) as number
-const refresh_token_expires_in=Number(process.env.refresh_token_expires_in) as number
+const access_admin_signature=env.access_admin_signature as string
+const access_user_signature=env.access_user_signature as string
+const refresh_admin_signature=env.refresh_admin_signature as string
+const refresh_user_signature=env.refresh_user_signature as string
+const access_token_expires_in=Number(env.access_token_expires_in) as number
+const refresh_token_expires_in=Number(env.refresh_token_expires_in) as number
 export interface ITokenPayload extends JwtPayload {
   _id: string;
   role: RoleEnum;

@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from "express"
+import { env } from "../../config/config.services"
 
 
 
-const mood=process.env.mood
+const mood=env.mood
 
 export interface IError extends Error{
     statusCode?:number
