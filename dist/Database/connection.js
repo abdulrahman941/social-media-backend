@@ -6,10 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const config_services_1 = require("../config/config.services");
 const connectDB = async () => {
-    // تجنب إعادة الاتصال إذا كان متصلاً بالفعل
-    if (mongoose_1.default.connection.readyState === 1) {
-        return;
-    }
     try {
         const connection = await mongoose_1.default.connect(config_services_1.env.mongo_uri, {
             serverSelectionTimeoutMS: 5000,

@@ -58,7 +58,7 @@ export class tooManyRequestException extends ApplicationException{
 
 export const globalErrorHandlar=(err:IError,req:Request,res:Response,next:NextFunction):void=>{
 const statusCode=err.statusCode ||500
-const isDev=env.mood==="Development"
+const isDev=env.mood==="development" ||"production"
 
 if(statusCode>=500){
     console.error(err);
