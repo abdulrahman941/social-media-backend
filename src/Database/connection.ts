@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
-import { env } from "../config/config.services";
 
 
 const connectDB=async():Promise<void>=>{
     try {
-    const connection=await mongoose.connect(env.mongo_uri,{
+    const connection=await mongoose.connect("mongodb+srv://abdulrahman1999hemida_db_user:9February99@cluster0.ihxc9k2.mongodb.net/",{
         serverSelectionTimeoutMS:5000,
     })
     console.log(`mongodb connected:${connection.connection.host}`);
