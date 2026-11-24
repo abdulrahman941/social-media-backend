@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 
 const connectDB=async():Promise<void>=>{
     try {
-    const uri=process.env.mongo_uri
+    const uri=process.env.mongo_uri as string
     if(!uri){
         console.error("Database UR is missing (mongo_uri)");
         throw new Error("mongo_uri is not defined in environment variables")
