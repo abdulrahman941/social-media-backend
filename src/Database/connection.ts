@@ -8,6 +8,7 @@ const connectDB=async():Promise<void>=>{
     if(!uri){
         throw new Error("mongo_uri is not defined in environment variables")
     }
+    console.log("DB URI exists:", Boolean(process.env.MONGO_URI));
     const connection=await mongoose.connect(env.mongo_uri,{
         serverSelectionTimeoutMS:5000,
     })
