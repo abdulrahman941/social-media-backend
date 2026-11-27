@@ -3,14 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.env = void 0;
 const node_path_1 = require("node:path");
 const dotenv_1 = require("dotenv");
-const envFile = process.env.NODE_ENV === "production" ? "./config/production.env" : "./config/dev.env";
-(0, dotenv_1.config)({ path: (0, node_path_1.resolve)(envFile) });
+if (process.env.NODE_ENV !== "production")
+    (0, dotenv_1.config)({ path: (0, node_path_1.resolve)("./config/dev.env") });
 exports.env = {
     app_url: process.env.app_url,
     //application
     port: Number(process.env.port) || 3000,
-    mood: process.env.mood || "development",
-    application_name: process.env.application_name || "development",
+    mood: process.env.mood,
+    application_name: process.env.application_name,
     //database
     mongo_uri: process.env.mongo_uri,
     //email

@@ -1,8 +1,9 @@
 import {resolve} from "node:path"
 import {config} from "dotenv"
 
-const envFile=process.env.NODE_ENV==="production"?"./config/production.env":"./config/dev.env"
-config({path:resolve(envFile)})
+if(process.env.NODE_ENV!=="production") config({path:resolve("./config/dev.env")})
+
+
 
 
 export const env={
@@ -10,8 +11,8 @@ app_url:process.env.app_url as string,
 
     //application
 port:Number(process.env.port)||3000,
-mood:process.env.mood||"development",
-application_name:process.env.application_name||"development",
+mood:process.env.mood,
+application_name:process.env.application_name,
 
 //database
 mongo_uri:process.env.mongo_uri as string,
