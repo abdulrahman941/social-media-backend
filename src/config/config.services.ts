@@ -1,8 +1,8 @@
 import {resolve} from "node:path"
 import {config} from "dotenv"
 
-
-config({path:resolve("./config/dev.env")})
+const envFile=process.env.NODE_ENV==="production"?"./config/production.env":"./config/dev.env"
+config({path:resolve(envFile)})
 
 
 export const env={

@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.env = void 0;
 const node_path_1 = require("node:path");
 const dotenv_1 = require("dotenv");
-(0, dotenv_1.config)({ path: (0, node_path_1.resolve)("./config/dev.env") });
+const envFile = process.env.NODE_ENV === "production" ? "./config/production.env" : "./config/dev.env";
+(0, dotenv_1.config)({ path: (0, node_path_1.resolve)(envFile) });
 exports.env = {
     app_url: process.env.app_url,
     //application
