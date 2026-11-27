@@ -1,7 +1,7 @@
 import {resolve} from "node:path"
 import {config} from "dotenv"
 
-if(process.env.NODE_ENV!=="production") config({path:resolve("./config/dev.env")})
+config({path:resolve("./config/dev.env")})
 
 
 
