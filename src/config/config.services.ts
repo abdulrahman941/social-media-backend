@@ -1,8 +1,8 @@
 import {resolve} from "node:path"
 import {config} from "dotenv"
 
-config({path:resolve("./config/dev.env")})
-
+if (process.env.NODE_ENV !== "production" && !process.env.VERCEL) 
+  config({ path: resolve("./config/dev.env") });
 
 
 
