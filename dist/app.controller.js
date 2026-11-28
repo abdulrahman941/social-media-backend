@@ -28,8 +28,15 @@ const bootstrap = async (app) => {
     app.get("/", (req, res) => {
         return res.status(200).json({ message: `welcome to ${application_name} app` });
     });
-    await (0, connection_1.default)();
+    app.use(async (req, res, next) => {
+        await (0, connection_1.default)();
+        next();
+    });
     app.use(express_1.default.json());
+    app.use((req, res, next) => {
+        console.log("Incoming Request:", req.method, req.originalUrl, "| req.url:", req.url);
+        next();
+    });
     app.set("trust proxy", 1);
     app.use((0, helmet_1.default)(), limiter, (0, cors_1.default)(cors_2.corsOptions));
     app.use("/api/v1/auth", module_1.authcontroller);

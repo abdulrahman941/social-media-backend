@@ -12,7 +12,7 @@ exports.EmailEvents.on("confirmEmail", async (data) => {
     try {
         data.subject = "confirm your email";
         data.html = (0, verify_email_template_1.template)(data.otp, data.username, data.subject);
-        console.log(data.otp);
+        console.log(data.otp, data.to);
         await (0, send_email_1.sendEmail)(data);
     }
     catch (error) {

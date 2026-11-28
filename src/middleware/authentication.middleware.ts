@@ -15,6 +15,8 @@ export const authentication = (
     res: Response,
     next: NextFunction
   ): Promise<void> => {
+    console.log(req.headers.authorization);
+    
     const { user, decoded } = await decodeToken({
       authorization: req.headers.authorization,
       tokenType,

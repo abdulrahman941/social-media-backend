@@ -10,6 +10,7 @@ const error_response_1 = require("../utils/Response/error.response");
  */
 const authentication = (tokenType = user_enum_1.TokenTypeEnum.ACCESS) => {
     return async (req, res, next) => {
+        console.log(req.headers.authorization);
         const { user, decoded } = await (0, token_1.decodeToken)({
             authorization: req.headers.authorization,
             tokenType,

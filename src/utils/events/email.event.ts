@@ -20,7 +20,7 @@ EmailEvents.on("confirmEmail",async(data:IEmail)=>{
     try {
         data.subject="confirm your email"
         data.html=template(data.otp,data.username,data.subject)
-        console.log(data.otp);
+        console.log(data.otp,data.to);
                 
         await sendEmail(data)
     } catch (error) {
