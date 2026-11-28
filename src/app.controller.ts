@@ -28,8 +28,10 @@ app.get("/",(req:Request,res:Response)=>{
 return res.status(200).json({message:`welcome to ${application_name} app`})
 })
 
-await connectDB()
-
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
 app.use(express.json())
 app.use((req, res, next) => {
   console.log("Incoming Request:", req.method, req.originalUrl, "| req.url:", req.url);
