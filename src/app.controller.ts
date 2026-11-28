@@ -38,7 +38,7 @@ app.use((req, res, next) => {
   next();
 });
 app.set("trust proxy", 1);
-app.use(helmet(),limiter,cors(corsOptions))
+app.use(helmet(),limiter,cors({origin:"*",credentials:true}))
 app.use("/api/v1/auth",authcontroller)
 app.use("/api/v1/post",postcontroller)
 app.use("/api/v1/user",usercontroller)
