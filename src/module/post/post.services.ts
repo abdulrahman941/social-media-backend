@@ -3,28 +3,54 @@ import { ICommentIdParamsDTO, ICreateCommentDTO, ICreatePostDTO, IPostIdParamsDT
 import { BadRequestException, ForbiddenException, NotFoundException } from "../../utils/Response/error.response"
 import { PostModel } from "../../Database/models/post.model"
 import { CommentModel } from "../../Database/models/comment.model"
+import { uploadBufferToCloudinary } from "../../utils/multer/cloud.multer"
 
 
 class postService{
     constructor(){}
+    // داخل class postService:
+createPost = async (req: Request, res: Response): Promise<Response> => {
+  const { content }: ICreatePostDTO = req.body;
+  const files = req.files as Express.Multer.File[] | undefined;
+
+  if (!content && !files?.length) {
+    throw new BadRequestException("post must have content or attachments");
+  }
+
+  let uploadedAttachments: string[] = [];
+  if (files?.length) {
+    const uploadResults = await Promise.all(
+      files.map((file) => uploadBufferToCloudinary(file.buffer, "posts"))
+    );
+    uploadedAttachments = uploadResults.map((result) => result.secure_url);
+  }
+
+  const post = await PostModel.create({
+    ...(typeof content === "string" && content ? { content } : {}),
+    ...(uploadedAttachments.length ? { attachments: uploadedAttachments } : {}),
+    createdBy: req.user!._id,
+  });
+
+  return res.status(201).json({ message: "post created successfully", data: { post } });
+};
     //post
-      createPost=async(req:Request,res:Response):Promise<Response>=>{
-      const {content}:ICreatePostDTO=req.body
-      const attachments=req.files as Express.Multer.File[] | undefined
-      if(!content &&! attachments?.length) throw new BadRequestException("post must have content or attachments")
-       const post = await PostModel.create({
-  ...(typeof content === "string" && content ? { content } : {}),
-  ...(attachments?.length
-    ? {
-        attachments: attachments.map(
-          (file) => `uploads/posts/${file.filename}`
-        ),
-      }
-    : {}),
-  createdBy: req.user!._id,
-});
-      return res.status(201).json({message:"post created successfully",data:{post}})
-      }
+//       createPost=async(req:Request,res:Response):Promise<Response>=>{
+//       const {content}:ICreatePostDTO=req.body
+//       const attachments=req.files as Express.Multer.File[] | undefined
+//       if(!content &&! attachments?.length) throw new BadRequestException("post must have content or attachments")
+//        const post = await PostModel.create({
+//   ...(typeof content === "string" && content ? { content } : {}),
+//   ...(attachments?.length
+//     ? {
+//         attachments: attachments.map(
+//           (file) => `uploads/posts/${file.filename}`
+//         ),
+//       }
+//     : {}),
+//   createdBy: req.user!._id,
+// });
+//       return res.status(201).json({message:"post created successfully",data:{post}})
+//       }
       toggleLikePost=async(req:Request,res:Response):Promise<Response>=>{
         const{postId}:IPostIdParamsDTO=req.params as {postId:string}
         const userId=req.user!._id

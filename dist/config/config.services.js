@@ -30,5 +30,8 @@ exports.env = {
     salt: process.env.salt || 12,
     // encryption (aes-256-cbc needs exectly 32 character)
     encryption_secret_key: process.env.encryption_secret_key,
-    whitelist: process.env.whitelist
+    whitelist: process.env.whitelist,
+    CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+    CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+    CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET
 };

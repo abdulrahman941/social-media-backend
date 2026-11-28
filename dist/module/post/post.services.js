@@ -3,25 +3,46 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const error_response_1 = require("../../utils/Response/error.response");
 const post_model_1 = require("../../Database/models/post.model");
 const comment_model_1 = require("../../Database/models/comment.model");
+const cloud_multer_1 = require("../../utils/multer/cloud.multer");
 class postService {
     constructor() { }
-    //post
+    // داخل class postService:
     createPost = async (req, res) => {
         const { content } = req.body;
-        const attachments = req.files;
-        if (!content && !attachments?.length)
+        const files = req.files;
+        if (!content && !files?.length) {
             throw new error_response_1.BadRequestException("post must have content or attachments");
+        }
+        let uploadedAttachments = [];
+        if (files?.length) {
+            const uploadResults = await Promise.all(files.map((file) => (0, cloud_multer_1.uploadBufferToCloudinary)(file.buffer, "posts")));
+            uploadedAttachments = uploadResults.map((result) => result.secure_url);
+        }
         const post = await post_model_1.PostModel.create({
             ...(typeof content === "string" && content ? { content } : {}),
-            ...(attachments?.length
-                ? {
-                    attachments: attachments.map((file) => `uploads/posts/${file.filename}`),
-                }
-                : {}),
+            ...(uploadedAttachments.length ? { attachments: uploadedAttachments } : {}),
             createdBy: req.user._id,
         });
         return res.status(201).json({ message: "post created successfully", data: { post } });
     };
+    //post
+    //       createPost=async(req:Request,res:Response):Promise<Response>=>{
+    //       const {content}:ICreatePostDTO=req.body
+    //       const attachments=req.files as Express.Multer.File[] | undefined
+    //       if(!content &&! attachments?.length) throw new BadRequestException("post must have content or attachments")
+    //        const post = await PostModel.create({
+    //   ...(typeof content === "string" && content ? { content } : {}),
+    //   ...(attachments?.length
+    //     ? {
+    //         attachments: attachments.map(
+    //           (file) => `uploads/posts/${file.filename}`
+    //         ),
+    //       }
+    //     : {}),
+    //   createdBy: req.user!._id,
+    // });
+    //       return res.status(201).json({message:"post created successfully",data:{post}})
+    //       }
     toggleLikePost = async (req, res) => {
         const { postId } = req.params;
         const userId = req.user._id;

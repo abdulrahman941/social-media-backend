@@ -19,8 +19,6 @@ export const authentication = (tokenType:
       authorization: req.headers.authorization,
       tokenType,
     });
-    console.log(req);
-    console.log(Headers);
     
     
 

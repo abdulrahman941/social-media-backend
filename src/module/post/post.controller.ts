@@ -1,6 +1,6 @@
 import {Router} from "express"
 import { authentication } from "../../middleware/authentication.middleware"
-import { fileValidation, localFileUpload } from "../../utils/multer/cloud.multer"
+import { cloudFileUpload, fileValidation} from "../../utils/multer/cloud.multer"
 import { validation } from "../../middleware/validation.middleware"
 import * as validators from "./post.validation"
 import postServices from "./post.services"
@@ -11,7 +11,7 @@ const router=Router()
 router.use(authentication())
 //post Api
 //create post
-router.post("/",localFileUpload({validation:fileValidation.image,folder:"posts"}).array("attachments",20),validation(validators.createPostSchema),postServices.createPost)
+router.post("/",cloudFileUpload({validation:fileValidation.image,maxSizeMB: 5,}).array("attachments",20),validation(validators.createPostSchema),postServices.createPost)
 router.patch("/:postId/like",validation(validators.postIdParamsSchema),postServices.toggleLikePost)
 router.patch("/:postId/update",validation(validators.updatePostSchema),postServices.updatePost)
 router.delete("/:postId/delete",validation(validators.postIdParamsSchema),postServices.deletePost)

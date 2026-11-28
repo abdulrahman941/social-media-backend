@@ -46,7 +46,7 @@ const router = (0, express_1.Router)();
 router.use((0, authentication_middleware_1.authentication)());
 //post Api
 //create post
-router.post("/", (0, cloud_multer_1.localFileUpload)({ validation: cloud_multer_1.fileValidation.image, folder: "posts" }).array("attachments", 20), (0, validation_middleware_1.validation)(validators.createPostSchema), post_services_1.default.createPost);
+router.post("/", (0, cloud_multer_1.cloudFileUpload)({ validation: cloud_multer_1.fileValidation.image, maxSizeMB: 5, }).array("attachments", 20), (0, validation_middleware_1.validation)(validators.createPostSchema), post_services_1.default.createPost);
 router.patch("/:postId/like", (0, validation_middleware_1.validation)(validators.postIdParamsSchema), post_services_1.default.toggleLikePost);
 router.patch("/:postId/update", (0, validation_middleware_1.validation)(validators.updatePostSchema), post_services_1.default.updatePost);
 router.delete("/:postId/delete", (0, validation_middleware_1.validation)(validators.postIdParamsSchema), post_services_1.default.deletePost);
