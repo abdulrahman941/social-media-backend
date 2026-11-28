@@ -7,34 +7,25 @@ import { ForbiddenException } from "../utils/Response/error.response";
  * Verifies the Bearer token and attaches the user to the request.
  * Use TokenTypeEnum.REFRESH on the refresh-token endpoint.
  */
-export const authentication = (
-  tokenType: TokenTypeEnum = TokenTypeEnum.ACCESS
-) => {
+export const authentication = (tokenType:
+   TokenTypeEnum = TokenTypeEnum.ACCESS) => {
   return async (
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<void> => {
-   try {
-   console.log("HEADERS:", Object.keys(req.headers));
-
-console.log(
-  "AUTH 1:",
-  req.headers.authorization
-);
-
-console.log(
-  "AUTH 2:",
-  req.get("Authorization")
-);
+    try {
     const { user, decoded } = await decodeToken({
       authorization: req.headers.authorization,
       tokenType,
     });
+    console.log(req);
+    console.log(Headers);
+    
+    
 
-    req.user = user;
+    req.user= user;
     req.decoded = decoded;
-    console.log(decoded);
     
     next();
    } catch (error) {

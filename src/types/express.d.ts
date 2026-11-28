@@ -1,3 +1,4 @@
+import { IUser } from "../Database/models/user.model";
 import { HUserDocument } from "../DB/models/User.model";
 import { ITokenPayload } from "../utils/security/token";
 
@@ -5,7 +6,7 @@ import { ITokenPayload } from "../utils/security/token";
 declare global {
   namespace Express {
     interface Request {
-      user?: HUserDocument;
+      user?: HUserDocument<IUser>;
       decoded?: ITokenPayload;
     }
   }
