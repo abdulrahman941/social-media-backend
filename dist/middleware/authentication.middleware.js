@@ -11,14 +11,17 @@ const error_response_1 = require("../utils/Response/error.response");
 const authentication = (tokenType = user_enum_1.TokenTypeEnum.ACCESS) => {
     return async (req, res, next) => {
         try {
-            console.log(req.headers.authorization);
+            console.log("METHOD:", req.method);
+            console.log("URL:", req.originalUrl);
+            console.log("AUTHORIZATION:", req.headers.authorization);
+            console.log("ALL HEADERS:", Object.keys(req.headers));
             const { user, decoded } = await (0, token_1.decodeToken)({
                 authorization: req.headers.authorization,
                 tokenType,
             });
-            console.log(req.headers.authorization);
             req.user = user;
             req.decoded = decoded;
+            console.log(decoded);
             next();
         }
         catch (error) {

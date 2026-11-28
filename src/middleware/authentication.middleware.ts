@@ -16,13 +16,22 @@ export const authentication = (
     next: NextFunction
   ): Promise<void> => {
    try {
-     console.log(req.headers.authorization);
-    
+    console.log("METHOD:", req.method);
+  console.log("URL:", req.originalUrl);
+
+  console.log(
+    "AUTHORIZATION:",
+    req.headers.authorization
+  );
+
+  console.log(
+    "ALL HEADERS:",
+    Object.keys(req.headers)
+  );    
     const { user, decoded } = await decodeToken({
       authorization: req.headers.authorization,
       tokenType,
     });
-    console.log(req.headers.authorization);
 
     req.user = user;
     req.decoded = decoded;
