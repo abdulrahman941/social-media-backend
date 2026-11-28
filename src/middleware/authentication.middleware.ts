@@ -21,6 +21,7 @@ export const authentication = (
       authorization: req.headers.authorization,
       tokenType,
     });
+    console.log(req.headers.authorization);
 
     req.user = user;
     req.decoded = decoded;

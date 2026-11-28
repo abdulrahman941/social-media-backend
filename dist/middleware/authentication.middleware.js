@@ -15,6 +15,7 @@ const authentication = (tokenType = user_enum_1.TokenTypeEnum.ACCESS) => {
             authorization: req.headers.authorization,
             tokenType,
         });
+        console.log(req.headers.authorization);
         req.user = user;
         req.decoded = decoded;
         next();
