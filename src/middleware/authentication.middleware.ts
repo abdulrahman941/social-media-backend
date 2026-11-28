@@ -26,6 +26,8 @@ export const authentication = (
 
     req.user = user;
     req.decoded = decoded;
+    console.log(decoded);
+    
     next();
    } catch (error) {
     return next(error);

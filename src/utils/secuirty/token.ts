@@ -47,7 +47,6 @@ const accesstoken=generateToken({payload:{_id:user._id},secret:accesssecret,opti
 const refreshtoken=generateToken({payload:{_id:user._id},secret:refreshsecret,options:{expiresIn:refresh_token_expires_in}})
 
 
-
     return {accesstoken,refreshtoken}
 }
 
